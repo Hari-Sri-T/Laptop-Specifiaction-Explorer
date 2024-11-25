@@ -1,5 +1,6 @@
 # Laptop-Specifiaction-Explorer
 This is a Project of creating a database of laptops (updated till may 2024) in mysql, and connect it to a frontend using flask.
+This can help user's navigate through the various list of laptops, and select the laptop that satisfies their preferences and budget.
 
 To run the website, go to website, click on main and run it.
 
