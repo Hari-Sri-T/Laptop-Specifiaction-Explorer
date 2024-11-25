@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laptop Explorer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/style2.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+
+<header>
+
+    <h1>Laptop Specification Explorer</h1>
+
+    <p>Your ultimate guide to exploring and choosing the best laptops!</p>
+</header>
+
+<section>
+    <div class="form-container">
+        <h2>Filter Your Laptop</h2>
+        <form action="/" method="POST">
+           <!-- Brand Dropdown -->
+            <div class="form-group">
+                <label for="brands">Brands</label>
+                <select id="brands" name="brands">
+                <option value="">Select a brand</option>  <!-- Default option -->
+                    {% for brand in brands %}  <!-- Use 'brand' as the loop variable -->
+                       <option value="{{ brand[0] }}">{{ brand[0] }}</option>  <!-- No indexing needed -->
+                    {% endfor %}
+            </select>
+            </div>
+
+            <!-- OS Dropdown -->
+            <div class="form-group">
+                <label for="os">Operating System</label>
+                <select id="os" name="os">
+                <option value="">Select an OS</option>  <!-- Default option -->
+                    {% for os in os_options %}
+                        <option value="{{ os[0] }}">{{ os[0] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Warranty Dropdown -->
+            <div class="form-group">
+                <label for="warranty">Warranty (in years)</label>
+                <select id="warranty" name="warranty">
+                <option value="">Select Warranty</option>  <!-- Default option -->
+                    {% for warranty in warranty_options %}
+                        <option value="{{ warranty[0] }}">{{ warranty[0] }} years</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="processor_brand">Processor Brand</label>  <!-- Updated 'for' attribute -->
+                <select id="processor_brand" name="processor_brand">  <!-- Updated 'id' and 'name' attributes -->
+                <option value="">Select Processor Brand</option>  <!-- Default option -->
+                    {% for brand_name in processor_brand %}  <!-- Loop through 'processor_brand' -->
+                        <option value="{{ brand_name[0] }}">{{ brand_name[0] }}</option>  <!-- Use 'brand_name' directly -->
+                    {% endfor %}
+                </select>
+            </div>
+            <!-- Processor Tier Dropdown -->
+            <div class="form-group">
+                <label for="processor_tier">Processor Tier</label>
+                <select id="processor_tier" name="processor_tier">
+                <option value="">Select Processor Tier</option>  <!-- Default option -->
+                    {% for processor in processor_tier %}
+                        <option value="{{ processor[0] }}">{{ processor[0] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Primary Storage Size Dropdown -->
+            <div class="form-group">
+                <label for="storage">Primary Storage Size (GB)</label>
+                <select id="storage" name="storage">
+                <option value="">Select Storage</option>  <!-- Default option -->
+                    {% for storage in storage_sizes %}
+                        <option value="{{ storage[0] }}">{{ storage[0] }} GB</option>
+                    {% endfor %}
+                </select>
+            </div>
+        
+            <div class="form-group">
+                <label for="storage_type">Primary Storage Type</label>
+                <select id="storage_type" name="storage_type">
+                <option value="">Select Storage Type</option>  <!-- Default option -->
+                    {% for storage_type in storage_type %}
+                        <option value="{{ storage_type[0] }}">{{ storage_type[0] }} </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- RAM Dropdown -->
+            <div class="form-group">
+                <label for="ram">RAM Size (GB)</label>
+                <select id="ram" name="ram">
+                <option value="">Select Ram Size</option>  <!-- Default option -->
+                
+                    {% for ram in ram_sizes %}
+                        <option value="{{ ram[0] }}">{{ ram[0] }} GB</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- gpu Dropdown -->
+            <div class="form-group">
+                <label for="gpu">GPU Company</label>
+                <select id="gpu" name="gpu">
+                    <option value="">Select Gpu Brand</option>  <!-- Default option -->
+                    {% for gpu in gpu %}  <!-- Ensure this matches the key in the returned dictionary -->
+                        <option value="{{ gpu[0] }}">{{ gpu[0] }}</option>  <!-- Assuming gpu[0] is the brand name -->
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Dedicated GPU Checkbox -->
+            <div class="form-group">
+                <label for="gpu">
+                    <input type="checkbox" id="gpu" name="gpu"> Dedicated GPU
+                </label>
+            </div>
+
+            <!-- Touch Screen Checkbox -->
+            <div class="form-group">
+                <label for="touchscreen">
+                    <input type="checkbox" id="touchscreen" name="touchscreen"> Touch Screen
+                </label>
+            </div>
+            <!-- function to implement best mac-->
+            <div class="form-group">
+                <label for="bestmac">
+                    <input type="checkbox" id="bestmac" name="bestmac"> Best Mac
+                </label>
+            </div>
+
+            <!-- function to implement best win-->
+
+            <div class="form-group">
+                <label for="bestwin">
+                    <input type="checkbox" id="bestwin" name="bestwin"> Best Win
+                </label>
+            </div>
+            
+             <!-- price -->
+             <div class="input-box">
+                <input type="text" name='price' placeholder="Price" required>
+                <i class='bx bx-rupee'></i>
+            </div>
+  
+
+            
+
+            <!-- Submit Button -->
+            <button type="submit">Search Laptops</button>
+        
+        </form>
+    </div>
+    
+</section>
+
+<style>
+    /* Add your CSS styles here */
+    #results-container {
+        max-height: 400px; /* Set a fixed height */
+        overflow-y: auto; /* Enable vertical scrolling */
+        border: 1px solid #ccc; /* Optional: Add a border */
+        padding: 10px; /* Optional: Add some padding */
+        margin-top: 20px; /* Optional: Add some margin */
+    }
+
+    table {
+        width: 100%; /* Make the table take full width */
+        border-collapse: collapse; /* Collapse borders */
+    }
+
+    th, td {
+        padding: 8px; /* Add padding to table cells */
+        text-align: left; /* Align text to the left */
+        border-bottom: 1px solid #ddd; /* Add a bottom border to rows */
+    }
+
+    th {
+        background-color: #625e5e;
+        backdrop-filter: blur(30px); /* Light gray background for headers */
+    }
+</style>
+</head>
+<body>
+
+<section id="results">
+<h2>Search Results</h2>
+<div id="results-container">
+    {% if results %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Brand</th>
+                    <th>Model</th>
+                    <th>Price</th>
+                    <th>Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                    <tr>
+                        <td>{{ result[0] }}</td> <!-- Brand Name -->
+                        <td>{{ result[1] }}</td> <!-- Model -->
+                        <td>{{ result[2] }}</td> <!-- Price -->
+                        <td>{{ result[3] }}</td> <!-- Rating -->
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No results found. Please adjust your filters and try again.</p>
+    {% endif %}
+</div>
+</section>
+
+<footer>
+    <p>Laptop Specification Explorer</p>
+</footer>
+
+</body>
+</html>
